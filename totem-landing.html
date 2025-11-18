@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOTEM — The First Daily Cognitive Vital Sign</title>
+    <meta name="description" content="A 60-second morning ritual for your mind. Track your cognitive patterns without judgment.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --black: #0a0a0a;
+            --gray-dark: #1a1a1a;
+            --gray: #2a2a2a;
+            --gray-light: #666;
+            --white: #fafafa;
+            --accent: #8b7355;
+            --accent-light: #b89968;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            padding: 40px 0 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 13px;
+            letter-spacing: 4px;
+            font-weight: 600;
+            color: var(--accent-light);
+            text-transform: uppercase;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+        
+        .hero h1 {
+            background: linear-gradient(135deg, var(--white) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: var(--gray-light);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+        
+        /* Device Visualization */
+        .device-visual {
+            margin: 60px 0;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--gray-dark) 0%, var(--gray) 100%);
+            border-radius: 24px;
+            border: 1px solid rgba(139, 115, 85, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .device-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 115, 85, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .device-mockup {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .device-shape {
+            width: 200px;
+            height: 140px;
+            margin: 0 auto 32px;
+            background: var(--black);
+            border-radius: 20px;
+            border: 2px solid var(--accent);
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        
+        .button-grid {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .button {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin: 4px;
+            opacity: 0.6;
+            animation: buttonGlow 3s ease-in-out infinite;
+        }
+        
+        .button:nth-child(1) { animation-delay: 0s; }
+        .button:nth-child(2) { animation-delay: 0.3s; }
+        .button:nth-child(3) { animation-delay: 0.6s; }
+        .button:nth-child(4) { animation-delay: 0.9s; }
+        
+        @keyframes buttonGlow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .device-caption {
+            font-size: 14px;
+            color: var(--gray-light);
+            font-style: italic;
+        }
+        
+        /* Features */
+        .features {
+            margin: 80px 0;
+        }
+        
+        .feature {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .feature h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--accent-light);
+        }
+        
+        .feature p {
+            color: var(--gray-light);
+            line-height: 1.7;
+        }
+        
+        /* The Ritual */
+        .ritual-section {
+            margin: 80px 0;
+            padding: 60px 40px;
+            background: var(--gray-dark);
+            border-radius: 24px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .ritual-section h2 {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .ritual-step {
+            margin-bottom: 24px;
+            padding-left: 32px;
+            position: relative;
+        }
+        
+        .ritual-step::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .ritual-step strong {
+            color: var(--accent-light);
+        }
+        
+        /* Differentiator */
+        .difference {
+            margin: 80px 0;
+            text-align: center;
+        }
+        
+        .difference h2 {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .comparison-col {
+            padding: 32px 24px;
+            border-radius: 16px;
+        }
+        
+        .comparison-col.old {
+            background: rgba(139, 115, 85, 0.1);
+            border: 1px solid rgba(139, 115, 85, 0.2);
+        }
+        
+        .comparison-col.new {
+            background: linear-gradient(135deg, var(--gray-dark) 0%, var(--gray) 100%);
+            border: 1px solid var(--accent);
+        }
+        
+        .comparison-col h4 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+        
+        .comparison-col ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .comparison-col li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .comparison-col.old li::before {
+            content: '✗ ';
+            color: #999;
+            margin-right: 8px;
+        }
+        
+        .comparison-col.new li::before {
+            content: '✓ ';
+            color: var(--accent-light);
+            margin-right: 8px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            margin: 100px 0 80px;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, var(--gray-dark) 0%, var(--black) 100%);
+            border-radius: 24px;
+            border: 2px solid var(--accent);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-light), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+        
+        .cta-section .subtitle {
+            margin-bottom: 40px;
+        }
+        
+        /* Email Form */
+        .email-form {
+            max-width: 460px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        input[type="email"] {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 16px;
+            background: var(--black);
+            border: 1px solid var(--gray);
+            border-radius: 12px;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+        
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+        }
+        
+        button {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 500;
+            background: var(--accent);
+            color: var(--black);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        
+        button:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 115, 85, 0.3);
+        }
+        
+        .form-note {
+            font-size: 13px;
+            color: var(--gray-light);
+            font-style: italic;
+        }
+        
+        .founding-badge {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 8px 16px;
+            background: rgba(139, 115, 85, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            text-align: center;
+            border-top: 1px solid var(--gray);
+        }
+        
+        footer p {
+            font-size: 13px;
+            color: var(--gray-light);
+            margin-bottom: 8px;
+        }
+        
+        .social-links {
+            margin-top: 24px;
+        }
+        
+        .social-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-light);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .subtitle {
+                font-size: 18px;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .device-visual,
+            .ritual-section,
+            .cta-section {
+                padding: 40px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Huginn & Muninn</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>The First Daily<br>Cognitive Vital Sign</h1>
+                <p class="subtitle">
+                    A 60-second morning ritual for your mind.<br>
+                    No scores. No judgment. Just presence.
+                </p>
+            </div>
+        </section>
+
+        <section class="device-visual">
+            <div class="container">
+                <div class="device-mockup">
+                    <div class="device-shape">
+                        <div class="button-grid">
+                            <div class="button"></div>
+                            <div class="button"></div>
+                            <br>
+                            <div class="button"></div>
+                            <div class="button"></div>
+                        </div>
+                    </div>
+                    <p class="device-caption">Totem — A ritual device for your mind</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature">
+                    <div class="feature-icon">🪨</div>
+                    <h3>A Physical Object</h3>
+                    <p>Not another app. A hand-sized device that sits on your desk — solid, substantial, intentional. Like a modern worry stone that knows you.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>60 Seconds Daily</h3>
+                    <p>Every morning: press buttons in response to patterns and lights. Reaction time, memory, focus. The ritual measures your cognitive state silently.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>No Daily Scores</h3>
+                    <p>You get tactile satisfaction — button clicks, warm vibrations, a satisfying thud when complete. No grades. No anxiety. Just done.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Patterns Emerge</h3>
+                    <p>Over weeks, discover what affects YOUR mind: sleep quality, stress, nutrition, routine. Not advice — insights from your own data.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ritual-section">
+            <div class="container">
+                <h2>The Daily Ritual</h2>
+                
+                <div class="ritual-step">
+                    <strong>Approach</strong> — The Totem glows softly, inviting you
+                </div>
+                
+                <div class="ritual-step">
+                    <strong>Unlock</strong> — Tap your personal pattern on the buttons
+                </div>
+                
+                <div class="ritual-step">
+                    <strong>Respond</strong> — LEDs flash, you press the right buttons
+                </div>
+                
+                <div class="ritual-step">
+                    <strong>Remember</strong> — Lights show a sequence, you repeat it
+                </div>
+                
+                <div class="ritual-step">
+                    <strong>Focus</strong> — React to colors, test impulse control
+                </div>
+                
+                <div class="ritual-step">
+                    <strong>Complete</strong> — Warm vibration, satisfying thud, gentle glow
+                </div>
+                
+                <div class="ritual-step">
+                    <strong>Move on</strong> — Your mind thanked. Your day begins.
+                </div>
+            </div>
+        </section>
+
+        <section class="difference">
+            <div class="container">
+                <h2>A Different Kind of Tracking</h2>
+                
+                <div class="comparison">
+                    <div class="comparison-col old">
+                        <h4>Other Apps</h4>
+                        <ul>
+                            <li>Daily scores create anxiety</li>
+                            <li>Gamification, rankings, badges</li>
+                            <li>Compare yourself to others</li>
+                            <li>"Brain training" promises</li>
+                            <li>Another screen to check</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-col new">
+                        <h4>Totem</h4>
+                        <ul>
+                            <li>Ritual without judgment</li>
+                            <li>Tactile satisfaction, not scores</li>
+                            <li>Compare yourself to yourself</li>
+                            <li>Measurement, not training</li>
+                            <li>Physical object, real presence</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Join the Founding Members</h2>
+                <p class="subtitle">
+                    Be among the first 250 people to own a Totem.<br>
+                    Early access, founder pricing, numbered device.
+                </p>
+                
+                <form class="email-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="your@email.com" 
+                            required
+                            autocomplete="email"
+                        >
+                        <button type="submit">Reserve Spot</button>
+                    </div>
+                    <p class="form-note">
+                        No payment required. Just early access to the launch.
+                    </p>
+                </form>
+                
+                <span class="founding-badge">Limited to 250 Founding Members</span>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>HUGINN & MUNINN INDUSTRIES</p>
+            <p style="opacity: 0.5;">The Cognitive Vital Sign Company</p>
+            
+            <div class="social-links">
+                <a href="mailto:hello@totem.example">Email</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+            
+            <p style="margin-top: 32px; font-size: 11px; opacity: 0.4;">
+                © 2024 Huginn & Muninn. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Simple analytics snippet (optional) -->
+    <script>
+        // Track form submissions
+        document.querySelector('.email-form').addEventListener('submit', function(e) {
+            // Add your analytics tracking here
+            console.log('Form submitted');
+        });
+    </script>
+</body>
+</html>
